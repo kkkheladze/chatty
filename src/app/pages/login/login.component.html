@@ -1,0 +1,19 @@
+<p-card [style]="{ 'padding-top': '1rem' }">
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <p-floatLabel>
+      <input pInputText formControlName="email" type="email" autofocus />
+      <label>Email</label>
+    </p-floatLabel>
+    <p-floatLabel>
+      <p-password formControlName="password" [feedback]="false" [toggleMask]="true" />
+      <label>Password</label>
+    </p-floatLabel>
+  </form>
+  <p-footer>
+    <p-button label="Login" [style]="{ width: '100%' }" [loading]="loading()" [disabled]="loading()" (click)="login()" />
+    <div class="register">
+      Don't have an account?
+      <a routerLink="/register">Create</a>
+    </div>
+  </p-footer>
+</p-card>
