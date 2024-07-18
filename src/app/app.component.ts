@@ -10,16 +10,13 @@ import { ToastModule } from 'primeng/toast';
 })
 export class AppComponent {
   constructor() {
-    this.initTheme();
+    const lightThemeMedia = window.matchMedia('(prefers-color-scheme: light)');
+    this.setTheme(lightThemeMedia.matches);
+    lightThemeMedia.addEventListener('change', (e) => this.setTheme(e.matches));
   }
 
-  private initTheme() {
-    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
-      const lightMode = e.matches;
-      const themeLink = document.getElementById('app-theme') as HTMLLinkElement;
-      if (!themeLink) return;
-
-      themeLink.href = `${lightMode ? 'light' : 'dark'}.css`;
-    });
+  private setTheme(light: boolean) {
+    const themeLink = document.getElementById('app-theme') as HTMLLinkElement;
+    themeLink.href = `${light ? 'light' : 'dark'}.css`;
   }
 }

@@ -1,10 +1,13 @@
 @import 'primeng/resources/primeng.css';
+@import 'primeicons/primeicons.css';
 @import './app/core/styles/prime.scss' layer(custom-prime);
 
 html,
 body {
   margin: 0;
   padding: 0;
+  color: var(--text-color);
+  background-color: var(--surface-ground);
 }
 
 * {

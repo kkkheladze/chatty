@@ -3,22 +3,24 @@ import { Component, inject, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 
+import { toSignal } from '@angular/core/rxjs-interop';
+import { CheckboxModule } from 'primeng/checkbox';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { filter } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
 import { TOASTER_TYPE, ToasterService } from '../../core/services/toastr.service';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, CardModule, ButtonModule, PasswordModule, InputTextModule, FloatLabelModule],
+  imports: [ReactiveFormsModule, RouterLink, ButtonModule, PasswordModule, InputTextModule, FloatLabelModule, IconFieldModule, InputIconModule, CheckboxModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss',
+  styleUrl: '/src/app/core/styles/auth-pages.scss',
 })
 export default class RegisterComponent {
   private authService = inject(AuthService);

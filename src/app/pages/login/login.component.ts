@@ -3,9 +3,10 @@ import { Component, inject, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-
+import { CheckboxModule } from 'primeng/checkbox';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { AuthService } from '../../core/services/auth.service';
@@ -14,9 +15,9 @@ import { TOASTER_TYPE, ToasterService } from '../../core/services/toastr.service
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, CardModule, ButtonModule, PasswordModule, InputTextModule, FloatLabelModule],
+  imports: [ReactiveFormsModule, RouterLink, ButtonModule, PasswordModule, InputTextModule, FloatLabelModule, IconFieldModule, InputIconModule, CheckboxModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  styleUrl: '/src/app/core/styles/auth-pages.scss',
 })
 export default class LoginComponent {
   private fb = inject(NonNullableFormBuilder);

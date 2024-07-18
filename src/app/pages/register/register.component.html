@@ -1,27 +1,37 @@
-<p-card [style]="{ 'padding-top': '1rem' }">
-  <form [formGroup]="registerForm" (ngSubmit)="register()">
-    <p-floatLabel>
-      <input pInputText formControlName="email" type="email" autocomplete="off" autofocus />
-      <label>Email</label>
-    </p-floatLabel>
-    <p-floatLabel>
-      <p-password formControlName="password" [feedback]="false" [toggleMask]="true" />
-      <label>Password</label>
-    </p-floatLabel>
-    <p-floatLabel>
-      <input pInputText formControlName="name" type="text" />
-      <label>First Name</label>
-    </p-floatLabel>
-    <p-floatLabel>
-      <input pInputText formControlName="lastName" type="text" />
-      <label>Last Name</label>
-    </p-floatLabel>
-  </form>
-  <p-footer>
-    <p-button label="Register" [style]="{ width: '100%' }" [loading]="loading()" [disabled]="loading()" (click)="register()" />
-    <div class="register">
-      Already have an account?
-      <a routerLink="/login">Login</a>
+<div class="card">
+  <div class="header">
+    <div class="title">Register</div>
+    <span class="description">Let's get started</span>
+  </div>
+  <form [formGroup]="registerForm">
+    <div class="input">
+      <p-iconField>
+        <p-inputIcon styleClass="pi pi-user" />
+        <input pInputText formControlName="name" type="text" placeholder="Name" />
+      </p-iconField>
     </div>
-  </p-footer>
-</p-card>
+    <div class="input">
+      <p-iconField>
+        <p-inputIcon styleClass="pi pi-user" />
+        <input pInputText formControlName="lastName" type="text" placeholder="Last Name" />
+      </p-iconField>
+    </div>
+    <div class="input">
+      <p-iconField>
+        <p-inputIcon styleClass="pi pi-envelope" />
+        <input pInputText formControlName="email" type="email" placeholder="Email" autofocus />
+      </p-iconField>
+    </div>
+    <div class="input">
+      <p-iconField>
+        <p-inputIcon styleClass="pi pi-lock" />
+        <input pInputText pPassword formControlName="password" [feedback]="false" placeholder="Password" />
+      </p-iconField>
+    </div>
+    <p-button label="Register" [style]="{ width: '100%', height: '3rem' }" [loading]="loading()" [disabled]="loading()" (click)="register()" />
+    <div class="login">
+      Already have an account?
+      <a routerLink="/login">Create</a>
+    </div>
+  </form>
+</div>
