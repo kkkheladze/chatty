@@ -1,10 +1,12 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Router, UrlTree } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { tap } from 'rxjs';
 
 import { RawUser } from '../models/user';
 import { RestService } from './rest.service';
+
+type Session = { expiresAt: number; issuedAt: number; email: string; name: string; lastName: string };
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +16,8 @@ export class AuthService {
   private router = inject(Router);
   private restService = inject(RestService);
 
-  private session: { expiresAt: number } | null = null;
   private readonly TOKEN_KEY = 'accessToken';
+  session = signal<Session | null>(null);
 
   constructor() {
     const accessToken = this.tokenGetter();
@@ -51,6 +53,6 @@ export class AuthService {
   private setSession(accessToken: string): void {
     localStorage.setItem(this.TOKEN_KEY, accessToken);
     const decoded = this.jwt.decodeToken(accessToken);
-    this.session = { expiresAt: decoded.exp };
+    this.session.set(decoded);
   }
 }

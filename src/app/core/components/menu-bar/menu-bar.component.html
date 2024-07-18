@@ -1,0 +1,6 @@
+<p-menubar>
+  <ng-template pTemplate="end">
+    <p-menu #menu [model]="menuItems" [popup]="true" />
+    <p-avatar [label]="initials()" shape="circle" size="large" (click)="menu.toggle($event)" />
+  </ng-template>
+</p-menubar>
