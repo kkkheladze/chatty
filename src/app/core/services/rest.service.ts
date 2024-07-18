@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { delay, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,5 +14,10 @@ export class RestService {
 
   register<T>(user: T) {
     return this.http.post<string>('/api/auth/register', user, { responseType: 'text' as any });
+  }
+
+  logout() {
+    // return this.http.post<void>('/api/auth/logout', {});
+    return of(null).pipe(delay(500));
   }
 }

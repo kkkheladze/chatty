@@ -11,3 +11,9 @@
     width: inherit;
   }
 }
+
+.p-panel {
+  .p-panel-content {
+    overflow-y: auto;
+  }
+}

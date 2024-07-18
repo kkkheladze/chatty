@@ -1,6 +1,9 @@
-<p-menubar>
-  <ng-template pTemplate="end">
-    <p-menu #menu [model]="menuItems" [popup]="true" />
-    <p-avatar [label]="initials()" shape="circle" size="large" (click)="menu.toggle($event)" />
-  </ng-template>
-</p-menubar>
+<div class="brand">
+  <img src="favicon.ico" alt="logo" />
+  <label>CHATTY</label>
+</div>
+<div class="avatar">
+  <label [for]="menu">{{ fullName() }}</label>
+  <p-menu #menu [model]="menuItems" [popup]="true" />
+  <p-avatar [label]="initials()" shape="circle" size="large" (click)="menu.toggle($event)" />
+</div>

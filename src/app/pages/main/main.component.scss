@@ -1,1 +1,19 @@
+:host {
+  display: grid;
+  grid-template-columns: minmax(20rem, 1fr) 4fr;
+  grid-template-rows: auto 1fr;
+  height: 100dvh;
 
+  app-menu-bar,
+  .body {
+    grid-column: 1/-1;
+  }
+
+  .body {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: subgrid;
+    grid-template-rows: subgrid;
+    padding: 1rem;
+  }
+}

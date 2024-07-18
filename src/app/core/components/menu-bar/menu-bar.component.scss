@@ -1,0 +1,21 @@
+:host {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1rem 0 1rem;
+
+  .brand {
+    font-size: 1.5rem;
+  }
+
+  .avatar,
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    p-avatar {
+      user-select: none;
+      cursor: pointer;
+    }
+  }
+}

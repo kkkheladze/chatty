@@ -15,6 +15,17 @@ import { MenuItem } from 'primeng/api';
 export class MenuBarComponent {
   private authService = inject(AuthService);
 
-  initials = computed<string>(() => this.authService.session()?.name[0] || '');
-  menuItems: MenuItem[] = [{ label: 'Logout', icon: 'pi pi-sign-out', command: () => this.authService.logout(), iconStyle: { color: 'var(--red-500)' } }];
+  session = computed(() => this.authService.session()!);
+  fullName = computed<string>(() => `${this.session().name} ${this.session().lastName}` || '');
+  initials = computed<string>(() => this.session().name[0]);
+  menuItems: MenuItem[] = [
+    {
+      label: 'Logout',
+      icon: 'pi pi-sign-out',
+      command: () => {
+        this.authService.logout();
+      },
+      iconStyle: { color: 'var(--red-500)' },
+    },
+  ];
 }
