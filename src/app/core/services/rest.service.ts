@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { delay, of } from 'rxjs';
-import { Conversation } from '../models/conversation';
+import { Conversation, ConversationDTO } from '../models/conversation';
 import { User } from '../models/user';
 
 @Injectable({
@@ -27,12 +27,18 @@ export class RestService {
     return of(null).pipe(delay(500));
   }
 
-  getAllConversations() {
-    return this.http.get<Conversation[]>('/api/conversations');
+  getAllConversations(populate: boolean = true) {
+    const params = new HttpParams().set('populate', populate);
+    return this.http.get<Conversation[]>(`/api/conversations`, { params });
   }
 
-  getUsersByQuery(search: string) {
-    return this.http.get<User[]>(`/api/users?search=${search}`);
+  createConversation(conversation: ConversationDTO) {
+    return this.http.post<Conversation>('/api/conversations', conversation);
+  }
+
+  getUsersByQuery(search: string, excludeSelf: boolean = true) {
+    const params = new HttpParams().set('search', search).set('excludeSelf', excludeSelf);
+    return this.http.get<User[]>(`/api/users`, { params });
   }
 
   getUserAvatar(id: string) {

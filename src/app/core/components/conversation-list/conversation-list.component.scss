@@ -15,18 +15,17 @@
       grid-template-rows: 1fr auto;
       column-gap: 0.5rem;
       align-items: center;
-
-      .avatar {
-        grid-row: 1 / -1;
-      }
-      .email {
-        color: var(--surface-500);
-        font-size: 0.8rem;
-        font-weight: 200;
-      }
     }
   }
   .list {
-    // TODO:
+    display: inherit;
+    flex-direction: inherit;
+    gap: 0.5rem;
+
+    .empty {
+      color: var(--surface-500);
+      font-weight: 200;
+      text-align: center;
+    }
   }
 }

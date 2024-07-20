@@ -1,3 +1,6 @@
+import { Message } from './message';
+import { User } from './user';
+
 export class ConversationDTO {
   users: string[];
 
@@ -6,4 +9,4 @@ export class ConversationDTO {
   }
 }
 
-export type Conversation = ConversationDTO & { _id: string };
+export type Conversation = { _id: string; users: User[]; lastMessage?: Message; updatedAt: string };

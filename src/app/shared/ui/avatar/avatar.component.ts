@@ -12,6 +12,10 @@ type Size = 'normal' | 'large' | 'xlarge';
   imports: [AvatarModule, SkeletonModule],
   templateUrl: './avatar.component.html',
   styleUrl: './avatar.component.scss',
+  host: {
+    '[class]': '[size(), textPosition()]',
+    '[class.text-left]': 'textPosition() === "left"',
+  },
 })
 export class AvatarComponent {
   private avatarService = inject(AvatarService);
@@ -20,12 +24,15 @@ export class AvatarComponent {
   shape = input<'circle' | 'square'>('circle');
   size = input<Size>('normal');
   style = input<{ [key: string]: any }>();
+  withText = input<boolean>(true);
+  description = input<string>('');
+  textPosition = input<'left' | 'right'>('right');
   loadImage = input<boolean>(true);
 
   avatar = signal<string | undefined>(undefined);
   loading = signal<boolean>(false);
   skeletonSize = computed(() => this.getSkeletonSize());
-  initials = computed(() => `${this.user().name[0]}${this.user().lastName[0]}`);
+  initials = computed(() => this.getInitials());
 
   constructor() {
     effect(() => {
@@ -36,11 +43,20 @@ export class AvatarComponent {
         if (!this.loadImage()) return;
         this.loading.set(true);
         this.avatarService.getUserAvatar(user._id).subscribe({
-          next: (avatar) => this.avatar.set(avatar),
-          complete: () => this.loading.set(false),
+          next: (avatar) => {
+            this.avatar.set(avatar);
+            this.loading.set(false);
+          },
+          error: () => this.loading.set(false),
         });
       });
     });
+  }
+
+  private getInitials() {
+    const user = this.user();
+    if (!user) return '';
+    return `${user.name[0]}${user.lastName[0]}`;
   }
 
   private getSkeletonSize() {

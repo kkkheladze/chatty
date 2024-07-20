@@ -1,0 +1,22 @@
+:host {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding-inline: 1rem;
+  height: 5rem;
+  cursor: pointer;
+
+  .last-updated {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  &.selected {
+    background-color: var(--primary-300);
+  }
+
+  &:not(.selected):hover {
+    background-color: var(--surface-hover);
+  }
+}

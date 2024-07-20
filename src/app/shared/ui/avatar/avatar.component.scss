@@ -1,3 +1,65 @@
-p-avatar {
-  display: block;
+$font-size-normal: 0.8rem;
+$font-size-large: 0.95rem;
+$font-size-xlarge: 1.1rem;
+
+:host {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    &.skeleton {
+      gap: 0.25rem;
+    }
+
+    .name,
+    .description {
+      margin: 0;
+    }
+
+    .name {
+      font-size: $font-size-normal;
+      font-weight: 500;
+    }
+
+    .description {
+      color: var(--surface-500);
+      font-size: calc($font-size-normal / 1.1);
+      font-weight: 200;
+    }
+  }
+
+  p-avatar {
+    display: block;
+  }
+
+  &.text-left {
+    flex-direction: row-reverse;
+
+    .text {
+      align-items: flex-end;
+    }
+  }
+
+  &.large {
+    .text .name {
+      font-size: $font-size-large;
+    }
+    .text .description {
+      font-size: calc($font-size-large / 1.1);
+    }
+  }
+
+  &.xlarge {
+    .text .name {
+      font-size: $font-size-xlarge;
+    }
+    .text .description {
+      font-size: calc($font-size-xlarge / 1.1);
+    }
+  }
 }

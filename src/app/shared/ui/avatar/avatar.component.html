@@ -1,7 +1,21 @@
 @if (loading()) {
-  <p-skeleton [style]="style()" [size]="skeletonSize()" [shape]="shape()" />
-} @else if (avatar()) {
-  <p-avatar [style]="style()" [image]="avatar()" [size]="size()" [shape]="shape()" />
+  <p-skeleton class="avatar" [style]="style()" [size]="skeletonSize()" [shape]="shape()" />
+  @if (withText()) {
+    <div class="text skeleton">
+      <p-skeleton class="name" width="6rem" height="1rem" />
+      @if (description()) {
+        <p-skeleton class="description" width="4rem" height="0.5rem" />
+      }
+    </div>
+  }
 } @else {
-  <p-avatar [style]="style()" [label]="initials()" [size]="size()" [shape]="shape()" />
+  <p-avatar id="avatar" [style]="style()" [label]="!avatar() ? initials() : undefined" [image]="avatar()" [size]="size()" [shape]="shape()" />
+  @if (withText()) {
+    <div class="text">
+      <h3 class="name">{{ user().name }} {{ user().lastName }}</h3>
+      @if (description(); as description) {
+        <p class="description">{{ description }}</p>
+      }
+    </div>
+  }
 }
