@@ -4,14 +4,12 @@ import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 
-import { toSignal } from '@angular/core/rxjs-interop';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-import { filter } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
 import { TOASTER_TYPE, ToasterService } from '../../core/services/toastr.service';
 
@@ -35,7 +33,6 @@ export default class RegisterComponent {
     email: ['', [Validators.email, Validators.required]],
     password: ['', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$')]],
   });
-  invalid = toSignal(this.registerForm.statusChanges.pipe(filter((status) => status === 'INVALID')));
 
   register() {
     this.registerForm.controls;

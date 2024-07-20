@@ -1,0 +1,26 @@
+<div class="header">
+  <p-autoComplete
+    [ngModel]="searchInput | async"
+    [suggestions]="userSuggestions()"
+    placeholder="Search"
+    field="_id"
+    (completeMethod)="searchInput.next($event.query)"
+    (onSelect)="createNewConversation($event)"
+  >
+    <ng-template let-user pTemplate="item">
+      <div class="user-suggestion">
+        <p-avatar class="avatar" label="{{ user.name[0] }}{{ user.lastName[0] }}" />
+        <div class="name">{{ user.name }} {{ user.lastName }}</div>
+        <div class="email">{{ user.email }}</div>
+      </div>
+    </ng-template>
+  </p-autoComplete>
+</div>
+<div class="list">
+  @if (newConversation(); as conversation) {
+    <div>Starting new Convo</div>
+  }
+  @for (conversation of conversations(); track conversation._id) {
+    {{ conversation._id }}
+  }
+</div>

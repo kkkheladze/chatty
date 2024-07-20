@@ -1,12 +1,12 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Router, UrlTree } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { tap } from 'rxjs';
+import { catchError, EMPTY, tap } from 'rxjs';
 
-import { RawUser } from '../models/user';
+import { UserDTO } from '../models/user';
 import { RestService } from './rest.service';
 
-type Session = { expiresAt: number; issuedAt: number; email: string; name: string; lastName: string };
+type Session = { expiresAt: number; issuedAt: number; _id: string; email: string; name: string; lastName: string };
 
 @Injectable({
   providedIn: 'root',
@@ -28,8 +28,18 @@ export class AuthService {
     return this.restService.login(credentials).pipe(tap((response) => this.setSession(response)));
   }
 
-  register(user: RawUser) {
+  register(user: UserDTO) {
     return this.restService.register(user).pipe(tap((response) => this.setSession(response)));
+  }
+
+  refreshToken() {
+    return this.restService.refreshToken().pipe(
+      tap((response) => this.setSession(response)),
+      catchError((error) => {
+        this.logout();
+        throw error;
+      })
+    );
   }
 
   logout() {

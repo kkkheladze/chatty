@@ -1,8 +1,8 @@
-export type RawUser = {
+export type UserDTO = {
   email: string;
   password: string;
   name: string;
   lastName: string;
 };
 
-export type User = RawUser & { id: string };
+export type User = UserDTO & { _id: string };

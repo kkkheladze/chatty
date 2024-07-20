@@ -26,7 +26,7 @@ export default class LoginComponent {
   private toasterService = inject(ToasterService);
 
   loginForm = this.fb.group({
-    email: ['', [Validators.email, Validators.required]],
+    email: ['', [Validators.required]],
     password: ['', [Validators.required]],
   });
   loading = signal<boolean>(false);

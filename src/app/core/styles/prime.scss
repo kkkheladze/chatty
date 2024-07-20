@@ -1,19 +1,6 @@
-.p-card {
-  .p-card-content {
-    padding: 0;
-  }
-}
-
-.p-password {
-  width: inherit;
-
-  input {
-    width: inherit;
-  }
-}
-
-.p-panel {
-  .p-panel-content {
-    overflow-y: auto;
-  }
+.p-autocomplete,
+.p-password,
+.p-inputwrapper,
+.p-inputtext {
+  width: 100%;
 }
