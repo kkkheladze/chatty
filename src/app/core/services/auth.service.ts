@@ -1,9 +1,9 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router, UrlTree } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { catchError, EMPTY, tap } from 'rxjs';
+import { catchError, tap } from 'rxjs';
 
-import { UserDTO } from '../models/user';
+import { User, UserDTO } from '../models/user';
 import { RestService } from './rest.service';
 
 type Session = { expiresAt: number; issuedAt: number; _id: string; email: string; name: string; lastName: string };
@@ -18,6 +18,12 @@ export class AuthService {
 
   private readonly TOKEN_KEY = 'accessToken';
   session = signal<Session | null>(null);
+  user = computed<User | null>(() => {
+    const session = this.session();
+    if (!session) return null;
+    const { _id, email, name, lastName } = session;
+    return { _id, email, name, lastName };
+  });
 
   constructor() {
     const accessToken = this.tokenGetter();

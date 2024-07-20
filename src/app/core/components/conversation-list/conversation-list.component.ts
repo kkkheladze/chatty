@@ -1,19 +1,18 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
+import { AvatarComponent } from '@ui';
 import { AutoCompleteModule, AutoCompleteSelectEvent } from 'primeng/autocomplete';
-import { AvatarModule } from 'primeng/avatar';
-import { ButtonModule } from 'primeng/button';
 import { BehaviorSubject, catchError, switchMap } from 'rxjs';
 import { Conversation, ConversationDTO } from '../../models/conversation';
 import { AuthService } from '../../services/auth.service';
 import { RestService } from '../../services/rest.service';
-import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-conversation-list',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, AutoCompleteModule, ButtonModule, AvatarModule, AsyncPipe],
+  imports: [FormsModule, AutoCompleteModule, AvatarComponent, AsyncPipe],
   templateUrl: './conversation-list.component.html',
   styleUrl: './conversation-list.component.scss',
   host: { class: 'p-panel' },
@@ -34,11 +33,13 @@ export class ConversationListComponent {
   newConversation = signal<ConversationDTO>(null!);
   userSuggestions = toSignal(this.userSuggestions$, { initialValue: [] });
   selectedConversation = signal<Conversation | null>(null);
+  loading = signal<boolean>(false);
 
   constructor() {
+    this.loading.set(true);
     this.restService.getAllConversations().subscribe({
       next: (conversations) => this.conversations.set(conversations),
-      error: () => null,
+      complete: () => this.loading.set(false),
     });
   }
 

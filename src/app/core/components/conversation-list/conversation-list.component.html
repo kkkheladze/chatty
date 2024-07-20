@@ -9,7 +9,7 @@
   >
     <ng-template let-user pTemplate="item">
       <div class="user-suggestion">
-        <p-avatar class="avatar" label="{{ user.name[0] }}{{ user.lastName[0] }}" />
+        <app-avatar class="avatar" [user]="user" [loadImage]="false" />
         <div class="name">{{ user.name }} {{ user.lastName }}</div>
         <div class="email">{{ user.email }}</div>
       </div>

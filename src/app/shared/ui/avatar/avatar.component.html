@@ -1,0 +1,7 @@
+@if (loading()) {
+  <p-skeleton [style]="style()" [size]="skeletonSize()" [shape]="shape()" />
+} @else if (avatar()) {
+  <p-avatar [style]="style()" [image]="avatar()" [size]="size()" [shape]="shape()" />
+} @else {
+  <p-avatar [style]="style()" [label]="initials()" [size]="size()" [shape]="shape()" />
+}

@@ -2,8 +2,10 @@
   <img src="favicon.ico" alt="logo" />
   <label>CHATTY</label>
 </div>
-<div class="avatar">
-  <label [for]="menu">{{ fullName() }}</label>
-  <p-menu #menu [model]="menuItems" [popup]="true" />
-  <p-avatar [label]="initials()" shape="circle" size="large" (click)="menu.toggle($event)" />
-</div>
+@if (user(); as user) {
+  <div class="avatar">
+    <label [for]="menu" style>{{ user.name }} {{ user.lastName }}</label>
+    <app-avatar [user]="user" shape="circle" size="large" (click)="menu.toggle($event)" />
+    <p-menu #menu [model]="menuItems" [popup]="true" />
+  </div>
+}

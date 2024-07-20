@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { delay, of } from 'rxjs';
 import { Conversation } from '../models/conversation';
@@ -33,5 +33,16 @@ export class RestService {
 
   getUsersByQuery(search: string) {
     return this.http.get<User[]>(`/api/users?search=${search}`);
+  }
+
+  getUserAvatar(id: string) {
+    const params = new HttpParams().set('id', id);
+    return this.http.get<ArrayBuffer>(`/api/avatars`, { params, responseType: 'arrayBuffer' as any });
+  }
+
+  uploadUserAvatar(avatar: File) {
+    const formData = new FormData();
+    formData.append('avatar', avatar);
+    return this.http.post<void>('/api/users/avatar', formData);
   }
 }
