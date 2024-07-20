@@ -6,9 +6,10 @@ import { AvatarComponent } from '@ui';
 import { AutoCompleteModule, AutoCompleteSelectEvent } from 'primeng/autocomplete';
 import { SkeletonModule } from 'primeng/skeleton';
 import { BehaviorSubject, catchError, switchMap } from 'rxjs';
-import { Conversation, ConversationDTO } from '../../models/conversation';
-import { AuthService } from '../../services/auth.service';
-import { RestService } from '../../services/rest.service';
+import { Conversation, ConversationDTO } from '../../../core/models/conversation';
+import { AuthService } from '../../../core/services/auth.service';
+import { RestService } from '../../../core/services/rest.service';
+import { MainService } from '../main.service';
 import { ConversationComponent } from './conversation/conversation.component';
 
 @Component({
@@ -22,8 +23,7 @@ import { ConversationComponent } from './conversation/conversation.component';
 export class ConversationListComponent {
   private restService = inject(RestService);
   private authService = inject(AuthService);
-
-  protected readonly DELAY = 500;
+  private mainService = inject(MainService);
 
   searchInput = new BehaviorSubject<string>('');
   private userSuggestions$ = this.searchInput.pipe(
@@ -31,10 +31,9 @@ export class ConversationListComponent {
     catchError(() => [])
   );
 
-  conversations = signal<Conversation[]>([]);
-  newConversation = signal<ConversationDTO>(null!);
   userSuggestions = toSignal(this.userSuggestions$, { initialValue: [] });
-  selectedConversation = signal<Conversation | null>(null);
+  conversations = this.mainService.conversations.asReadonly();
+  selectedConversation = this.mainService.selectedConversation.asReadonly();
   loading = signal<boolean>(false);
   addingConversation = signal<boolean>(false);
 
@@ -42,7 +41,7 @@ export class ConversationListComponent {
     this.loading.set(true);
     this.restService.getAllConversations().subscribe({
       next: (conversations) => {
-        this.conversations.set(conversations);
+        this.mainService.conversations.set(conversations);
         this.loading.set(false);
       },
       error: () => this.loading.set(false),
@@ -51,16 +50,16 @@ export class ConversationListComponent {
 
   createNewConversation(event: AutoCompleteSelectEvent) {
     this.searchInput.next('');
-    const existingConversation = this.conversations().find((conversation) => conversation.users[1]._id === event.value._id);
+    const existingConversation = this.mainService.conversations().find((conversation) => conversation.users[1]._id === event.value._id);
     if (existingConversation) {
-      this.selectedConversation.set(existingConversation);
+      this.selectConversation(existingConversation);
     } else {
       this.addingConversation.set(true);
-      this.newConversation.set(new ConversationDTO(this.authService.session()!._id, event.value._id));
-      this.restService.createConversation(this.newConversation()).subscribe({
+      const newConversation = new ConversationDTO(this.authService.user()!._id, event.value._id);
+      this.restService.createConversation(newConversation).subscribe({
         next: (conversation) => {
-          this.conversations.set([conversation, ...this.conversations()]);
-          this.selectedConversation.set(conversation);
+          this.mainService.conversations.update((conversations) => [conversation, ...conversations]);
+          this.selectConversation(conversation);
           this.addingConversation.set(false);
         },
         error: () => this.addingConversation.set(false),
@@ -68,7 +67,7 @@ export class ConversationListComponent {
     }
   }
 
-  selectConversation(conversation: Conversation | null) {
-    this.selectedConversation.set(conversation ? structuredClone(conversation) : null);
+  selectConversation(conversation: Conversation) {
+    this.mainService.selectedConversation.set(conversation);
   }
 }

@@ -13,7 +13,7 @@ type Size = 'normal' | 'large' | 'xlarge';
   templateUrl: './avatar.component.html',
   styleUrl: './avatar.component.scss',
   host: {
-    '[class]': '[size(), textPosition()]',
+    '[class]': '[size()]',
     '[class.text-left]': 'textPosition() === "left"',
   },
 })

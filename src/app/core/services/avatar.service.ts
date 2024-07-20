@@ -1,5 +1,4 @@
 import { inject, Injectable } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { catchError, map, of, tap } from 'rxjs';
 import { RestService } from './rest.service';
 
@@ -8,19 +7,19 @@ import { RestService } from './rest.service';
 })
 export class AvatarService {
   private restService = inject(RestService);
-  private sanitizer = inject(DomSanitizer);
 
-  cache = new Map<string, string>();
+  cache = new Map<string, string | '404'>();
 
   getUserAvatar(id: string) {
     const avatar = this.cache.get(id);
+    if (avatar === '404') return of(undefined);
     if (avatar) return of(avatar);
-
-    return this.restService.getUserAvatar(id).pipe(
+    this.cache.set(id, '404');
+    return this.restService.getAvatar(id).pipe(
       map((buffer) => {
         const blob = new Blob([buffer], { type: 'image/jpeg' });
         const url = URL.createObjectURL(blob);
-        this.cache.set(id, this.sanitizer.bypassSecurityTrustUrl(url) as string);
+        this.cache.set(id, url);
         return url;
       }),
       catchError(() => of(undefined))
@@ -28,7 +27,7 @@ export class AvatarService {
   }
 
   uploadAvatar(id: string, avatar: File) {
-    return this.restService.uploadUserAvatar(avatar).pipe(
+    return this.restService.uploadAvatar(avatar).pipe(
       tap((avatar) => {
         // this.cache.set(id,URL.createObjectURL() )
         // this.cache.set(this.authService.session()!._id, avatar);

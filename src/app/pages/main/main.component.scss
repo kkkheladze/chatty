@@ -16,4 +16,8 @@
     grid-template-rows: subgrid;
     padding: 1rem;
   }
+
+  router-outlet {
+    display: none;
+  }
 }

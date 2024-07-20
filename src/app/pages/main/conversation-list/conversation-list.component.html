@@ -24,7 +24,7 @@
     @for (conversation of conversations(); track conversation._id) {
       <app-conversation [ngClass]="{ selected: selectedConversation()?._id === conversation._id }" [conversation]="conversation" (click)="selectConversation(conversation)" />
     } @empty {
-      <div class="empty">&lt;empty&gt;</div>
+      <div class="empty">Start a new conversation</div>
     }
   }
 </div>

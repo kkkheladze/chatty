@@ -1,0 +1,38 @@
+:host {
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  padding: 1rem;
+  min-height: 0;
+  height: 100%;
+
+  .messages,
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 3rem;
+  }
+
+  .messages {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    gap: 1rem;
+    overflow-y: auto;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .actions {
+    padding-block: 1rem;
+
+    input,
+    button {
+      height: 3rem;
+    }
+    button {
+      gap: 0.5rem;
+    }
+  }
+}

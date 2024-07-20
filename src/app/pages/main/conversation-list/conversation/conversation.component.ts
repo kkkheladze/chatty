@@ -1,6 +1,6 @@
 import { Component, computed, input } from '@angular/core';
 import { AvatarComponent } from '@ui';
-import { Conversation, ConversationDTO } from '../../../models/conversation';
+import { Conversation, ConversationDTO } from '../../../../core/models/conversation';
 
 @Component({
   selector: 'app-conversation',
@@ -15,9 +15,6 @@ export class ConversationComponent {
   lastUpdated = computed<string>(() => this.getLastUpdated());
 
   private getLastUpdated() {
-    const conversation = this.conversation;
-    if (conversation instanceof ConversationDTO) return '';
-
     const updatedAt = (this.conversation() as Conversation).updatedAt;
 
     const timeDifference = new Date().getTime() - new Date(updatedAt).getTime();

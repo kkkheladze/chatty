@@ -1,0 +1,32 @@
+:host {
+  display: grid;
+  grid-template-rows: auto;
+  gap: 1rem;
+  padding: 1rem;
+  padding-bottom: 0;
+  width: 100%;
+  justify-content: flex-start;
+
+  app-avatar {
+    transform: translateX(-2.5rem);
+  }
+
+  .message {
+    padding: 1rem;
+    flex-grow: 1;
+    max-width: 50rem;
+  }
+
+  &.own-message {
+    justify-content: flex-end;
+
+    app-avatar {
+      transform: translateX(2.5rem);
+    }
+
+    .message {
+      background-color: var(--primary-200);
+      text-align: end;
+    }
+  }
+}

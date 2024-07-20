@@ -3,7 +3,7 @@ import { Router, UrlTree } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { catchError, tap } from 'rxjs';
 
-import { User, UserDTO } from '../models/user';
+import { Credentials, User, UserDTO } from '../models/user';
 import { RestService } from './rest.service';
 
 type Session = { expiresAt: number; issuedAt: number; _id: string; email: string; name: string; lastName: string };
@@ -30,7 +30,7 @@ export class AuthService {
     accessToken && this.setSession(accessToken);
   }
 
-  login(credentials: { email: string; password: string }) {
+  login(credentials: Credentials) {
     return this.restService.login(credentials).pipe(tap((response) => this.setSession(response)));
   }
 

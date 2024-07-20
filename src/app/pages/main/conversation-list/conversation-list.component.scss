@@ -1,8 +1,9 @@
 :host {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr;
   gap: 1rem;
   padding: 1rem;
+  min-height: 0;
 
   .header {
     display: flex;
@@ -17,10 +18,16 @@
       align-items: center;
     }
   }
+
   .list {
-    display: inherit;
-    flex-direction: inherit;
+    display: flex;
+    flex-direction: column;
     gap: 0.5rem;
+    overflow-y: auto;
+
+    > app-conversation {
+      flex-shrink: 0;
+    }
 
     .empty {
       color: var(--surface-500);
