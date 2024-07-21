@@ -1,7 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
@@ -22,7 +22,6 @@ import { MessageComponent } from './message/message.component';
   host: { class: 'p-panel' },
 })
 export class ChatComponent {
-  private route = inject(ActivatedRoute);
   private restService = inject(RestService);
   private mainService = inject(MainService);
   private authService = inject(AuthService);
@@ -46,7 +45,10 @@ export class ChatComponent {
   ownUserId = computed(() => this.authService.user()?._id);
 
   messages = signal<Message[]>([]);
-  messageInput = new FormControl<string>('', { nonNullable: true });
+  form = new FormGroup({
+    message: new FormControl<string>('', { validators: Validators.required, nonNullable: true }),
+    // TODO: Add attachments?
+  });
   sendingMessage = signal<boolean>(false);
 
   constructor() {
@@ -58,11 +60,11 @@ export class ChatComponent {
   }
 
   sendMessage() {
-    if (!this.messageInput.value || !this.chat()) return;
+    if (this.form.invalid || !this.chat()) return;
     this.sendingMessage.set(true);
-    this.restService.sendMessage(this.chat()!._id, { senderId: this.authService.user()!._id, text: this.messageInput.value }).subscribe({
+    this.restService.sendMessage(this.chat()!._id, { senderId: this.authService.user()!._id, text: this.form.getRawValue().message }).subscribe({
       next: (message) => {
-        this.messageInput.setValue('');
+        this.form.reset();
         this.sendingMessage.set(false);
         this.messages.update((messages) => (messages.unshift(message), messages));
         this.mainService.setLastMessage(this.chat()!._id, message);

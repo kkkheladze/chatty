@@ -8,7 +8,7 @@
   </div>
 }
 <p-divider />
-<div class="actions">
-  <input pInputText [formControl]="messageInput" placeholder="Type a message" />
-  <button pButton icon="pi pi-send" [disabled]="!chat() || !messageInput.value" [loading]="sendingMessage()" (click)="sendMessage()">Send</button>
-</div>
+<form class="actions" [formGroup]="form" (ngSubmit)="sendMessage()">
+  <input formControlName="message" pInputText placeholder="Type a message" />
+  <p-button [type]="'submit'" icon="pi pi-send" label="Send" [disabled]="!chat() || form.invalid" [loading]="sendingMessage()" [style]="{ height: '3rem', 'border-radius': 'var(--border-radius)' }" />
+</form>
