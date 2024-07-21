@@ -39,8 +39,8 @@ export class MainService {
       if (index >= 0) {
         const [selectedChat] = chats.splice(index, 1);
         selectedChat.lastMessage = message;
-        selectedChat.updatedAt = message.createdAt;
-        return [selectedChat, ...chats];
+        selectedChat.updatedAt = message.sentAt;
+        return [{ ...selectedChat }, ...chats];
       }
       return chats;
     });

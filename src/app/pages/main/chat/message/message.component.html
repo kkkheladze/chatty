@@ -4,3 +4,9 @@
 <div class="message p-panel">
   {{ message().text }}
 </div>
+<div class="additional-info">
+  <p class="time">{{ time() }}</p>
+  @if (ownMessage() && lastMessage()) {
+    <p class="status">{{ status() }}</p>
+  }
+</div>

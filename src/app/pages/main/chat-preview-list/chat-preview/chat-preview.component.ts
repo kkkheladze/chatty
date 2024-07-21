@@ -1,6 +1,8 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, ElementRef, inject, input } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Chat } from '@core/models/chat';
 import { AvatarComponent } from '@ui';
+import { filter, timer } from 'rxjs';
 
 @Component({
   selector: 'app-chat-preview',
@@ -11,10 +13,14 @@ import { AvatarComponent } from '@ui';
   host: { class: 'p-panel' },
 })
 export class ChatComponent {
+  private elementRef: ElementRef<HTMLElement> = inject(ElementRef);
+
   chat = input.required<Chat>();
+  timer = toSignal(timer(0, 1000 * 60).pipe(filter(() => this.elementRef.nativeElement.checkVisibility())), { initialValue: 0 });
   lastUpdated = computed<string>(() => this.getLastUpdated());
 
   private getLastUpdated() {
+    this.timer();
     const updatedAt = (this.chat() as Chat).updatedAt;
 
     const timeDifference = new Date().getTime() - new Date(updatedAt).getTime();
@@ -40,7 +46,7 @@ export class ChatComponent {
       case minutesAgo > 0:
         return `${minutesAgo} m`;
       case secondsAgo > 0:
-        return `${secondsAgo} s`;
+        return `1 m<`;
       default:
         return 'Just now';
     }

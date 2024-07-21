@@ -7,7 +7,12 @@
     } @else {
       @for (message of messages(); track message._id) {
         @defer (on viewport; prefetch on viewport) {
-          <app-message [message]="message" [user]="user1._id === message.senderId ? user1 : user2" [ownMessage]="message.senderId === ownUserId()" />
+          <app-message
+            [message]="message"
+            [lastMessage]="message._id === chat.lastMessage?._id"
+            [user]="user1._id === message.senderId ? user1 : user2"
+            [ownMessage]="message.senderId === ownUserId()"
+          />
         } @placeholder {
           <p-skeleton [style]="{ width: '100%', 'max-width': '40rem', height: '5rem' }" />
         }

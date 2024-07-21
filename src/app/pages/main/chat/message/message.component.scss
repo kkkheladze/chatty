@@ -17,6 +17,11 @@
     max-width: 50rem;
   }
 
+  .additional-info {
+    font-size: 0.75rem;
+    color: var(--surface-500);
+  }
+
   &.own-message {
     justify-content: flex-end;
 
@@ -28,5 +33,13 @@
       background-color: var(--primary-200);
       text-align: end;
     }
+
+    .additional-info {
+      text-align: end;
+    }
   }
+}
+
+p {
+  margin: 0;
 }
