@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
+import { Message } from '@core/models/message';
+import { User } from '@core/models/user';
 import { AvatarComponent } from '@ui';
-import { Message } from '../../../../core/models/message';
-import { User } from '../../../../core/models/user';
 
 @Component({
   selector: 'app-message',

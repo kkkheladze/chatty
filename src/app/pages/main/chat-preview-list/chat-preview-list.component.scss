@@ -24,6 +24,7 @@
     flex-direction: column;
     gap: 0.5rem;
     overflow-y: auto;
+    overscroll-behavior: contain;
 
     > app-chat-preview {
       flex-shrink: 0;

@@ -1,10 +1,12 @@
 <div class="brand">
   <img src="favicon.ico" alt="logo" />
-  <label>CHATTY</label>
+  @if (!mobileView()) {
+    <label>CHATTY</label>
+  }
 </div>
 @if (user(); as user) {
   <div class="avatar">
-    <app-avatar [user]="user" textPosition="left" shape="circle" size="large" (click)="menu.toggle($event)" />
+    <app-avatar [user]="user" [withText]="!mobileView()" textPosition="left" shape="circle" size="large" (click)="menu.toggle($event)" />
     <p-menu #menu [model]="menuItems" [popup]="true" />
   </div>
 }

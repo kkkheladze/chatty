@@ -1,14 +1,22 @@
-@if (chat(); as chat) {
-  @let user1 = chat.users[0];
-  @let user2 = chat.users[1];
-  <div class="messages">
-    @for (message of messages(); track message._id) {
-      <app-message [message]="message" [user]="user1._id === message.senderId ? user1 : user2" [ownMessage]="message.senderId === ownUserId()" />
+<div class="messages">
+  @if (chat(); as chat) {
+    @let user1 = chat.users[0];
+    @let user2 = chat.users[1];
+    @if (loading()) {
+      <p-progressSpinner strokeWidth="5" stroke="var(--primary-200)" />
+    } @else {
+      @for (message of messages(); track message._id) {
+        @defer (on viewport; prefetch on viewport) {
+          <app-message [message]="message" [user]="user1._id === message.senderId ? user1 : user2" [ownMessage]="message.senderId === ownUserId()" />
+        } @placeholder {
+          <p-skeleton [style]="{ width: '100%', 'max-width': '40rem', height: '5rem' }" />
+        }
+      }
     }
-  </div>
-}
+  }
+</div>
 <p-divider />
 <form class="actions" [formGroup]="form" (ngSubmit)="sendMessage()">
   <input formControlName="message" pInputText placeholder="Type a message" />
-  <p-button [type]="'submit'" icon="pi pi-send" label="Send" [disabled]="!chat() || form.invalid" [loading]="sendingMessage()" [style]="{ height: '3rem', 'border-radius': 'var(--border-radius)' }" />
+  <p-button [type]="'submit'" icon="pi pi-send" [label]="mobileView() ? undefined : ' Send'" [disabled]="!chat() || form.invalid" [loading]="sending()" [style]="{ height: '3rem' }" />
 </form>

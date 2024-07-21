@@ -1,6 +1,6 @@
 :host {
   display: grid;
-  grid-template-columns: minmax(20rem, 1fr) 4fr;
+  grid-template-columns: 2fr 4fr;
   grid-template-rows: auto 1fr;
   height: 100dvh;
 
@@ -19,5 +19,11 @@
 
   router-outlet {
     display: none;
+  }
+}
+
+:host.mobile-view {
+  .body {
+    grid-template-columns: 1fr;
   }
 }

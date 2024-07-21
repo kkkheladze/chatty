@@ -19,9 +19,15 @@
     flex-direction: column-reverse;
     align-items: flex-end;
     gap: 1rem;
-    overflow-y: auto;
     padding-right: 1rem;
     padding-bottom: 1rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    &:has(p-progressSpinner) {
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   .actions {
@@ -30,5 +36,11 @@
     input {
       height: 3rem;
     }
+  }
+}
+
+:host.mobile-view {
+  .actions {
+    padding: 0;
   }
 }

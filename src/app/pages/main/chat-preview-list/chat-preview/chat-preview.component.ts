@@ -1,6 +1,6 @@
 import { Component, computed, input } from '@angular/core';
+import { Chat } from '@core/models/chat';
 import { AvatarComponent } from '@ui';
-import { Chat } from '../../../../core/models/chat';
 
 @Component({
   selector: 'app-chat-preview',

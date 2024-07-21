@@ -1,21 +1,21 @@
-import { AsyncPipe, NgClass } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { AsyncPipe, NgClass, NgTemplateOutlet } from '@angular/common';
+import { Component, inject, output, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
+import { Chat, ChatDTO } from '@core/models/chat';
+import { AuthService } from '@core/services/auth.service';
+import { RestService } from '@core/services/rest.service';
 import { AvatarComponent } from '@ui';
 import { AutoCompleteModule, AutoCompleteSelectEvent } from 'primeng/autocomplete';
 import { SkeletonModule } from 'primeng/skeleton';
 import { BehaviorSubject, catchError, switchMap } from 'rxjs';
-import { Chat, ChatDTO } from '../../../core/models/chat';
-import { AuthService } from '../../../core/services/auth.service';
-import { RestService } from '../../../core/services/rest.service';
 import { MainService } from '../main.service';
 import { ChatComponent } from './chat-preview/chat-preview.component';
 
 @Component({
   selector: 'app-chat-preview-list',
   standalone: true,
-  imports: [FormsModule, SkeletonModule, AutoCompleteModule, AvatarComponent, ChatComponent, AsyncPipe, NgClass],
+  imports: [FormsModule, NgTemplateOutlet, SkeletonModule, AutoCompleteModule, AvatarComponent, ChatComponent, AsyncPipe, NgClass],
   templateUrl: './chat-preview-list.component.html',
   styleUrl: './chat-preview-list.component.scss',
   host: { class: 'p-panel' },
@@ -36,8 +36,10 @@ export class ChatPreviewListComponent {
   selectedChat = this.mainService.selectedChat.asReadonly();
   loading = signal<boolean>(false);
   addingChat = signal<boolean>(false);
+  chatSelected = output<void>();
 
   constructor() {
+    if (this.chats().length > 0) return;
     this.loading.set(true);
     this.restService.getChats().subscribe({
       next: (chats) => {
@@ -69,5 +71,6 @@ export class ChatPreviewListComponent {
 
   selectChat(chat: Chat) {
     this.mainService.selectedChat.set(chat);
+    this.chatSelected.emit();
   }
 }

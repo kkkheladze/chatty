@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Message } from '../../core/models/message';
-import { Chat } from '../../core/models/chat';
 import { Router } from '@angular/router';
+import { Chat } from '@core/models/chat';
+import { Message } from '@core/models/message';
 
 @Injectable({
   providedIn: 'root',

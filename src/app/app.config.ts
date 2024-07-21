@@ -3,12 +3,11 @@ import { ApplicationConfig, importProvidersFrom, inject, provideExperimentalZone
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
+import { refreshTokenInterceptor } from '@core/interceptors/refresh-token.interceptor';
+import { AuthService } from '@core/services/auth.service';
 import { MessageService } from 'primeng/api';
-
 import { environment } from '../environments/environment';
 import ROOT_ROUTES from './app.routes';
-import { refreshTokenInterceptor } from './core/interceptors/refresh-token.interceptor';
-import { AuthService } from './core/services/auth.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [

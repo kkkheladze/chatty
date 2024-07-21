@@ -1,8 +1,8 @@
 import { Component, computed, effect, inject, input, signal, untracked } from '@angular/core';
+import { User } from '@core/models/user';
+import { AvatarService } from '@core/services/avatar.service';
 import { AvatarModule } from 'primeng/avatar';
 import { SkeletonModule } from 'primeng/skeleton';
-import { User } from '../../../core/models/user';
-import { AvatarService } from '../../../core/services/avatar.service';
 
 type Size = 'normal' | 'large' | 'xlarge';
 

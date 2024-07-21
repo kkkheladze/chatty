@@ -18,13 +18,26 @@
 <div class="list">
   @if (loading()) {
     @for (item of [0, 0, 0, 0]; track $index) {
-      <p-skeleton [style]="{ width: '100%', height: '5rem' }" />
+      <ng-container *ngTemplateOutlet="skeleton" />
     }
   } @else {
+    @if (addingChat()) {
+      <ng-container *ngTemplateOutlet="skeleton" />
+    }
     @for (chat of chats(); track chat._id) {
-      <app-chat-preview [ngClass]="{ selected: selectedChat()?._id === chat._id }" [chat]="chat" (click)="selectChat(chat)" />
+      @defer (on viewport) {
+        <app-chat-preview [ngClass]="{ selected: selectedChat()?._id === chat._id }" [chat]="chat" (click)="selectChat(chat)" />
+      } @placeholder {
+        <div>
+          <ng-container *ngTemplateOutlet="skeleton" />
+        </div>
+      }
     } @empty {
       <div class="empty">Start a conversation</div>
     }
   }
 </div>
+
+<ng-template #skeleton>
+  <p-skeleton [style]="{ width: '100%', height: '5rem' }" />
+</ng-template>

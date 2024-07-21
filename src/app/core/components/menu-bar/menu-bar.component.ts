@@ -1,9 +1,10 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ScreenService } from '@core/services/screen.service';
+import { AvatarComponent } from '@ui';
+import { MenuItem } from 'primeng/api';
+import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { AuthService } from '../../services/auth.service';
-import { MenuModule } from 'primeng/menu';
-import { MenuItem } from 'primeng/api';
-import { AvatarComponent } from '@ui';
 
 @Component({
   selector: 'app-menu-bar',
@@ -14,6 +15,7 @@ import { AvatarComponent } from '@ui';
 })
 export class MenuBarComponent {
   private authService = inject(AuthService);
+  mobileView = inject(ScreenService).mobileView;
 
   user = this.authService.user;
   menuItems: MenuItem[] = [
