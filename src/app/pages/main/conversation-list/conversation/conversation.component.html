@@ -1,4 +1,0 @@
-@if (conversation(); as conversation) {
-  <app-avatar [user]="conversation.users[1]" [description]="conversation.lastMessage?.text || ''" size="large" />
-  <strong class="last-updated">{{ lastUpdated() }}</strong>
-}

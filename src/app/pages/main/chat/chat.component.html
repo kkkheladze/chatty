@@ -1,12 +1,14 @@
-@if (conversation(); as conversation) {
+@if (chat(); as chat) {
+  @let user1 = chat.users[0];
+  @let user2 = chat.users[1];
   <div class="messages">
     @for (message of messages(); track message._id) {
-      <app-message [message]="message" [user]="conversation.users[0]._id === message.senderId ? conversation.users[0] : conversation.users[1]" [ownMessage]="message.senderId === ownUserId()" />
+      <app-message [message]="message" [user]="user1._id === message.senderId ? user1 : user2" [ownMessage]="message.senderId === ownUserId()" />
     }
   </div>
 }
 <p-divider />
 <div class="actions">
   <input pInputText [formControl]="messageInput" placeholder="Type a message" />
-  <button pButton icon="pi pi-send" [disabled]="!conversation() || !messageInput.value" [loading]="sendingMessage()" (click)="sendMessage()">Send</button>
+  <button pButton icon="pi pi-send" [disabled]="!chat() || !messageInput.value" [loading]="sendingMessage()" (click)="sendMessage()">Send</button>
 </div>

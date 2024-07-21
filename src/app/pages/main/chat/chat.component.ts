@@ -27,19 +27,19 @@ export class ChatComponent {
   private mainService = inject(MainService);
   private authService = inject(AuthService);
 
-  conversation = this.mainService.selectedConversation;
-  conversation$ = toObservable(this.conversation);
+  chat = this.mainService.selectedChat;
+  chat$ = toObservable(this.chat);
 
-  initialMessages$ = this.conversation$.pipe(
-    filter((conversation) => {
-      if (!conversation) return false;
-      if (this.mainService.isConversationCached(conversation._id)) {
-        this.messages.set(this.mainService.getConversationMessages(conversation._id)!);
+  initialMessages$ = this.chat$.pipe(
+    filter((chat) => {
+      if (!chat) return false;
+      if (this.mainService.isChatCached(chat._id)) {
+        this.messages.set(this.mainService.getMessagesFromCache(chat._id)!);
         return false;
       }
       return true;
     }),
-    switchMap((conversation) => this.restService.getMessages(conversation!._id).pipe(tap((messages) => this.mainService.cacheConversationMessages(conversation!._id, messages)))),
+    switchMap((chat) => this.restService.getMessages(chat!._id).pipe(tap((messages) => this.mainService.cacheMessages(chat!._id, messages)))),
     catchError(() => [])
   );
 
@@ -58,17 +58,14 @@ export class ChatComponent {
   }
 
   sendMessage() {
-    if (!this.messageInput.value || !this.conversation()) return;
+    if (!this.messageInput.value || !this.chat()) return;
     this.sendingMessage.set(true);
-    this.restService.sendMessage(this.conversation()!._id, { senderId: this.authService.user()!._id, text: this.messageInput.value }).subscribe({
+    this.restService.sendMessage(this.chat()!._id, { senderId: this.authService.user()!._id, text: this.messageInput.value }).subscribe({
       next: (message) => {
-        this.messages.update((messages) => {
-          messages.unshift(message);
-          return messages;
-        });
         this.messageInput.setValue('');
         this.sendingMessage.set(false);
-        this.mainService.setLastMessage(this.conversation()!._id, message);
+        this.messages.update((messages) => (messages.unshift(message), messages));
+        this.mainService.setLastMessage(this.chat()!._id, message);
       },
       error: () => this.sendingMessage.set(false),
     });

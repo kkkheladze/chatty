@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Message } from '../../core/models/message';
-import { Conversation } from '../../core/models/conversation';
+import { Chat } from '../../core/models/chat';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -10,40 +10,39 @@ export class MainService {
   private router = inject(Router);
 
   private messageCache = new Map<string, Message[]>();
-  conversations = signal<Conversation[]>([]);
-  selectedConversation = signal<Conversation | null>(null);
+  chats = signal<Chat[]>([]);
+  selectedChat = signal<Chat | null>(null);
 
-  getConversationMessages(conversationId: string) {
-    return this.messageCache.get(conversationId);
+  getMessagesFromCache(chatId: string) {
+    return this.messageCache.get(chatId);
   }
 
-  cacheConversationMessages(conversationId: string, messages: Message[]) {
-    this.messageCache.set(conversationId, messages);
+  cacheMessages(chatId: string, messages: Message[]) {
+    this.messageCache.set(chatId, messages);
   }
 
-  isConversationCached(conversationId: string) {
-    return this.messageCache.has(conversationId);
+  isChatCached(chatId: string) {
+    return this.messageCache.has(chatId);
   }
 
-  selectConversationById(conversationId: string) {
-    if (this.selectedConversation() && conversationId === this.selectedConversation()!._id) return;
-    const conversation = this.conversations().find((conversation) => conversation._id === conversationId);
-    if (conversation) this.selectedConversation.set(conversation);
+  selectChat(chatId: string) {
+    if (this.selectedChat() && chatId === this.selectedChat()!._id) return;
+    const chat = this.chats().find((chat) => chat._id === chatId);
+    if (chat) this.selectedChat.set(chat);
     else this.router.navigate(['']);
   }
 
-  setLastMessage(conversationId: string, message: Message) {
-    if (!conversationId) return;
-    this.conversations.update((conversations) => {
-      const index = conversations.findIndex((conversation) => conversation._id === conversationId);
-      if (index !== -1) {
-        const [selectedConversation] = conversations.splice(index, 1);
-        selectedConversation.lastMessage = message;
-        selectedConversation.updatedAt = message.createdAt;
-        conversations.unshift(selectedConversation);
-        return structuredClone(conversations);
+  setLastMessage(chatId: string, message: Message) {
+    if (!chatId) return;
+    this.chats.update((chats) => {
+      const index = chats.findIndex((chat) => chat._id === chatId);
+      if (index >= 0) {
+        const [selectedChat] = chats.splice(index, 1);
+        selectedChat.lastMessage = message;
+        selectedChat.updatedAt = message.createdAt;
+        return [selectedChat, ...chats];
       }
-      return conversations;
+      return chats;
     });
   }
 }

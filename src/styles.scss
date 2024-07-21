@@ -1,5 +1,5 @@
-@import 'primeng/resources/primeng.css';
-@import 'primeicons/primeicons.css';
+@import 'primeng/resources/primeng.css' layer(custom);
+@import 'primeicons/primeicons.css' layer(prime-icons);
 @import './app/core/styles/prime.scss' layer(custom-prime);
 
 html,

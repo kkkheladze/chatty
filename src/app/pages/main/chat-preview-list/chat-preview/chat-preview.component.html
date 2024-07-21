@@ -1,0 +1,4 @@
+@if (chat(); as chat) {
+  <app-avatar [user]="chat.users[1]" [description]="chat.lastMessage?.text || ''" size="large" />
+  <p class="last-updated">{{ lastUpdated() }}</p>
+}

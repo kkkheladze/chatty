@@ -6,4 +6,5 @@ export type MessageDTO = {
 export type Message = MessageDTO & {
   _id: string;
   createdAt: string;
+  chatId: string;
 };

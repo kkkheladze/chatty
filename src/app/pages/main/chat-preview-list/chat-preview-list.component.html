@@ -6,7 +6,7 @@
     field="_id"
     [delay]="500"
     (completeMethod)="searchInput.next($event.query)"
-    (onSelect)="createNewConversation($event)"
+    (onSelect)="createChat($event)"
   >
     <ng-template let-user pTemplate="item">
       <div class="user-suggestion">
@@ -21,10 +21,10 @@
       <p-skeleton [style]="{ width: '100%', height: '5rem' }" />
     }
   } @else {
-    @for (conversation of conversations(); track conversation._id) {
-      <app-conversation [ngClass]="{ selected: selectedConversation()?._id === conversation._id }" [conversation]="conversation" (click)="selectConversation(conversation)" />
+    @for (chat of chats(); track chat._id) {
+      <app-chat-preview [ngClass]="{ selected: selectedChat()?._id === chat._id }" [chat]="chat" (click)="selectChat(chat)" />
     } @empty {
-      <div class="empty">Start a new conversation</div>
+      <div class="empty">Start a conversation</div>
     }
   }
 </div>

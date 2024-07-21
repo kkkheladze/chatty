@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { delay, of } from 'rxjs';
-import { Conversation, ConversationDTO } from '../models/conversation';
+import { Chat, ChatDTO } from '../models/chat';
 import { Credentials, User, UserDTO } from '../models/user';
 import { Message, MessageDTO } from '../models/message';
 
@@ -45,20 +45,20 @@ export class RestService {
   }
 
   /**
-   * @param populate - A boolean indicating whether to populate the conversation data (ex. users).
-   * @returns A promise that resolves to an array of Conversation objects.
+   * @param populate - A boolean indicating whether to populate the chat data (ex. users).
+   * @returns A promise that resolves to an array of Chat objects.
    */
-  getAllConversations(populate: boolean = true) {
+  getChats(populate: boolean = true) {
     const params = new HttpParams().set('populate', populate);
-    return this.http.get<Conversation[]>(`/api/conversations`, { params });
+    return this.http.get<Chat[]>(`/api/chats`, { params });
   }
 
   /**
-   * @param conversation - The new conversation details.
-   * @returns A promise that resolves to a Conversation object representing the created conversation.
+   * @param chat - The new chat details.
+   * @returns A promise that resolves to a Chat object representing the created chat.
    */
-  createConversation(conversation: ConversationDTO) {
-    return this.http.post<Conversation>('/api/conversations', conversation);
+  createChat(chat: ChatDTO) {
+    return this.http.post<Chat>('/api/chats', chat);
   }
 
   /**
@@ -94,18 +94,18 @@ export class RestService {
   }
 
   /**
-   * Retrieves messages from a conversation.
-   * @param conversationId - A path parameter of the ID of the conversation.
+   * Retrieves messages from a chat.
+   * @param chatId - A path parameter of the ID of the chat.
    * @param limit - A query parameter of the maximum number of messages to retrieve.
    * @param offset - A query parameter of the number of messages to skip.
    * @returns A promise that resolves to an array of Message objects.
    */
-  getMessages(conversationId: string, limit: number = 50, offset: number = 0) {
+  getMessages(chatId: string, limit: number = 50, offset: number = 0) {
     const params = new HttpParams().set('limit', limit).set('offset', offset);
-    return this.http.get<Message[]>(`/api/conversations/${conversationId}/messages`, { params });
+    return this.http.get<Message[]>(`/api/chats/${chatId}/messages`, { params });
   }
 
-  sendMessage(conversationId: string, message: MessageDTO) {
-    return this.http.post<Message>(`/api/conversations/${conversationId}/messages`, message);
+  sendMessage(chatId: string, message: MessageDTO) {
+    return this.http.post<Message>(`/api/chats/${chatId}/messages`, message);
   }
 }
