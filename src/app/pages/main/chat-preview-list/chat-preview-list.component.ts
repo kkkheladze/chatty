@@ -5,8 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { Chat, ChatDTO } from '@core/models/chat';
 import { AuthService } from '@core/services/auth.service';
 import { RestService } from '@core/services/rest.service';
+import { ThemeService } from '@core/services/theme.service';
 import { AvatarComponent } from '@ui';
 import { AutoCompleteModule, AutoCompleteSelectEvent } from 'primeng/autocomplete';
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { SkeletonModule } from 'primeng/skeleton';
 import { BehaviorSubject, catchError, switchMap } from 'rxjs';
 import { MainService } from '../main.service';
@@ -15,7 +17,7 @@ import { ChatComponent } from './chat-preview/chat-preview.component';
 @Component({
   selector: 'app-chat-preview-list',
   standalone: true,
-  imports: [FormsModule, NgTemplateOutlet, SkeletonModule, AutoCompleteModule, AvatarComponent, ChatComponent, AsyncPipe, NgClass],
+  imports: [FormsModule, NgTemplateOutlet, SkeletonModule, AutoCompleteModule, InputSwitchModule, AvatarComponent, ChatComponent, AsyncPipe, NgClass],
   templateUrl: './chat-preview-list.component.html',
   styleUrl: './chat-preview-list.component.scss',
   host: { class: 'p-panel' },
@@ -24,6 +26,7 @@ export class ChatPreviewListComponent {
   private restService = inject(RestService);
   private authService = inject(AuthService);
   private mainService = inject(MainService);
+  protected themeService = inject(ThemeService);
 
   searchInput = new BehaviorSubject<string>('');
   private userSuggestions$ = this.searchInput.pipe(

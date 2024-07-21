@@ -37,6 +37,11 @@
     }
   }
 </div>
+<div class="theme-switch">
+  <i class="pi pi-sun"></i>
+  <p-inputSwitch [style]="{ display: 'grid', 'place-items': 'center' }" [ngModel]="themeService.activeTheme() === 'dark'" (ngModelChange)="themeService.setTheme($event ? 'dark' : 'light', true)" />
+  <i class="pi pi-moon"></i>
+</div>
 
 <ng-template #skeleton>
   <p-skeleton [style]="{ width: '100%', height: '5rem' }" />
