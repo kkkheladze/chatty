@@ -6,7 +6,7 @@
       <p-progressSpinner strokeWidth="5" stroke="var(--primary-200)" />
     } @else {
       @for (message of messages(); track message._id) {
-        @defer (on viewport; prefetch on viewport) {
+        @defer (on viewport) {
           <app-message
             [message]="message"
             [lastMessage]="message._id === chat.lastMessage?._id"

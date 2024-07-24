@@ -5,6 +5,7 @@ import { provideRouter } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import { refreshTokenInterceptor } from '@core/interceptors/refresh-token.interceptor';
 import { AuthService } from '@core/services/auth.service';
+import { SocketIoModule } from 'ngx-socket-io';
 import { MessageService } from 'primeng/api';
 import { environment } from '../environments/environment';
 import ROOT_ROUTES from './app.routes';
@@ -21,7 +22,8 @@ export const appConfig: ApplicationConfig = {
           tokenGetter: () => inject(AuthService).tokenGetter(),
           allowedDomains: [environment.BASE_URL],
         },
-      })
+      }),
+      SocketIoModule.forRoot({ url: environment.WS_URL })
     ),
     MessageService,
   ],

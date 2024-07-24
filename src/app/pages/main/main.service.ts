@@ -40,7 +40,10 @@ export class MainService {
         const [selectedChat] = chats.splice(index, 1);
         selectedChat.lastMessage = message;
         selectedChat.updatedAt = message.sentAt;
-        return [{ ...selectedChat }, ...chats];
+
+        const updatedChat = { ...selectedChat };
+        if (this.selectedChat()?._id === selectedChat._id) this.selectedChat.set(updatedChat);
+        return [updatedChat, ...chats];
       }
       return chats;
     });
