@@ -8,9 +8,7 @@ $font-size-xlarge: 1.1rem;
   gap: 0.5rem;
 
   .text {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    display: grid;
 
     &.skeleton {
       gap: 0.25rem;
@@ -19,7 +17,7 @@ $font-size-xlarge: 1.1rem;
     .name,
     .description {
       margin: 0;
-      max-width: 8rem;
+      min-width: 0;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -45,7 +43,7 @@ $font-size-xlarge: 1.1rem;
     flex-direction: row-reverse;
 
     .text {
-      align-items: flex-end;
+      text-align: end;
     }
   }
 

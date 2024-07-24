@@ -1,7 +1,8 @@
-import { AsyncPipe, NgClass } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MobileViewDirective } from '@core/directives/mobile-view.directive';
 import { Message } from '@core/models/message';
 import { AuthService } from '@core/services/auth.service';
 import { RestService } from '@core/services/rest.service';
@@ -13,8 +14,6 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { catchError, filter, switchMap, tap } from 'rxjs';
 import { MainService } from '../main.service';
 import { MessageComponent } from './message/message.component';
-import { ScreenService } from '@core/services/screen.service';
-import { MobileViewDirective } from '@core/directives/mobile-view.directive';
 
 @Component({
   selector: 'app-chat',
@@ -29,7 +28,7 @@ export class ChatComponent {
   private restService = inject(RestService);
   private mainService = inject(MainService);
   private authService = inject(AuthService);
-  mobileView = inject(ScreenService).mobileView;
+  protected mobileView = inject(MobileViewDirective).mobileView;
 
   chat = this.mainService.selectedChat;
   chat$ = toObservable(this.chat);

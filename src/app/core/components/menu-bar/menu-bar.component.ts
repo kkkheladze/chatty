@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ScreenService } from '@core/services/screen.service';
+import { MobileViewDirective } from '@core/directives/mobile-view.directive';
 import { AvatarComponent } from '@ui';
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
@@ -12,13 +12,14 @@ import { AuthService } from '../../services/auth.service';
   imports: [MenubarModule, MenuModule, AvatarComponent],
   templateUrl: './menu-bar.component.html',
   styleUrl: './menu-bar.component.scss',
+  hostDirectives: [MobileViewDirective],
 })
 export class MenuBarComponent {
   private authService = inject(AuthService);
-  mobileView = inject(ScreenService).mobileView;
+  protected mobileView = inject(MobileViewDirective).mobileView;
 
-  user = this.authService.user;
-  menuItems: MenuItem[] = [
+  protected user = this.authService.user;
+  protected menuItems: MenuItem[] = [
     {
       label: 'Logout',
       icon: 'pi pi-sign-out',

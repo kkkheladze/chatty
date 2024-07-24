@@ -7,7 +7,7 @@ import { ScreenService } from '@core/services/screen.service';
 })
 export class MobileViewDirective {
   private elementRef = inject(ElementRef);
-  private mobileView = inject(ScreenService).mobileView;
+  mobileView = inject(ScreenService).mobileView;
 
   constructor() {
     effect(() => {
