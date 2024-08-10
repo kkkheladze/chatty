@@ -1,4 +1,4 @@
-import { Component, computed, ElementRef, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, input } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Chat } from '@core/models/chat';
 import { AvatarComponent } from '@ui';
@@ -10,6 +10,7 @@ import { filter, timer } from 'rxjs';
   imports: [AvatarComponent],
   templateUrl: './chat-preview.component.html',
   styleUrl: './chat-preview.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-panel' },
 })
 export class ChatComponent {
@@ -49,22 +50,6 @@ export class ChatComponent {
         return `1 m<`;
       default:
         return 'Just now';
-    }
-
-    if (yearsAgo > 0) {
-      return `${yearsAgo} Y`;
-    } else if (monthsAgo > 0) {
-      return `${monthsAgo} M`;
-    } else if (weeksAgo > 0) {
-      return `${weeksAgo} W`;
-    } else if (daysAgo > 0) {
-      return `${daysAgo} D`;
-    } else if (hoursAgo > 0) {
-      return `${hoursAgo} H`;
-    } else if (minutesAgo > 0) {
-      return `${minutesAgo} M`;
-    } else if (secondsAgo > 0) {
-      return secondsAgo ? `${secondsAgo} S` : 'Just now';
     }
   }
 }

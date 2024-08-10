@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MobileViewDirective } from '@core/directives/mobile-view.directive';
 import { AvatarComponent } from '@ui';
 import { MenuItem } from 'primeng/api';
@@ -12,6 +12,7 @@ import { AuthService } from '../../services/auth.service';
   imports: [MenubarModule, MenuModule, AvatarComponent],
   templateUrl: './menu-bar.component.html',
   styleUrl: './menu-bar.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [MobileViewDirective],
 })
 export class MenuBarComponent {

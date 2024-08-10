@@ -1,5 +1,5 @@
-import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
+import { inject } from '@angular/core';
 import { AuthService } from '@core/services/auth.service';
 
 export default [

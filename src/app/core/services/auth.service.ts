@@ -26,7 +26,7 @@ export class AuthService {
   });
 
   constructor() {
-    const accessToken = this.tokenGetter();
+    const accessToken = this.getToken();
     accessToken && this.setSession(accessToken);
   }
 
@@ -56,7 +56,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    const accessToken = this.tokenGetter();
+    const accessToken = this.getToken();
     return !!(accessToken && !this.jwt.isTokenExpired(accessToken));
   }
 
@@ -64,7 +64,7 @@ export class AuthService {
     return this.isLoggedIn() || this.router.createUrlTree(['/login']);
   }
 
-  tokenGetter(): string | null {
+  getToken(): string | null {
     return localStorage.getItem(this.TOKEN_KEY);
   }
 

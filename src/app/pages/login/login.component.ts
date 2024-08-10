@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
@@ -18,6 +18,7 @@ import { PasswordModule } from 'primeng/password';
   imports: [ReactiveFormsModule, RouterLink, ButtonModule, PasswordModule, InputTextModule, FloatLabelModule, IconFieldModule, InputIconModule, CheckboxModule],
   templateUrl: './login.component.html',
   styleUrl: '/src/app/core/styles/auth-pages.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class LoginComponent {
   private fb = inject(NonNullableFormBuilder);

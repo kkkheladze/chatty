@@ -19,8 +19,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       JwtModule.forRoot({
         config: {
-          tokenGetter: () => inject(AuthService).tokenGetter(),
-          allowedDomains: [environment.BASE_URL],
+          tokenGetter: () => inject(AuthService).getToken(),
         },
       }),
       SocketIoModule.forRoot({ url: environment.WS_URL })

@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/(api|v1)/:path*",
+      "destination": "https://chatty-server.up.railway.app/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/$1"
+    }
+  ]
+}

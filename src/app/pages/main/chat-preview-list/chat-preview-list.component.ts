@@ -1,5 +1,5 @@
 import { AsyncPipe, NgClass, NgTemplateOutlet } from '@angular/common';
-import { Component, inject, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, output, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Chat, ChatDTO } from '@core/models/chat';
@@ -20,6 +20,7 @@ import { ChatComponent } from './chat-preview/chat-preview.component';
   imports: [FormsModule, NgTemplateOutlet, SkeletonModule, AutoCompleteModule, InputSwitchModule, AvatarComponent, ChatComponent, AsyncPipe, NgClass],
   templateUrl: './chat-preview-list.component.html',
   styleUrl: './chat-preview-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-panel' },
 })
 export class ChatPreviewListComponent {

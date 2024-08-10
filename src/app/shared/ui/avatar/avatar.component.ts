@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, input, signal, untracked } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input, signal, untracked } from '@angular/core';
 import { User } from '@core/models/user';
 import { AvatarService } from '@core/services/avatar.service';
 import { AvatarModule } from 'primeng/avatar';
@@ -12,6 +12,7 @@ type Size = 'normal' | 'large' | 'xlarge';
   imports: [AvatarModule, SkeletonModule],
   templateUrl: './avatar.component.html',
   styleUrl: './avatar.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class]': '[size()]',
     '[class.text-left]': 'textPosition() === "left"',

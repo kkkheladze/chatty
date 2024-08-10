@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MobileViewDirective } from '@core/directives/mobile-view.directive';
@@ -22,6 +22,7 @@ import { MessageComponent } from './message/message.component';
   imports: [ReactiveFormsModule, ProgressSpinnerModule, SkeletonModule, DividerModule, InputTextModule, ButtonModule, AsyncPipe, MessageComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-panel' },
   hostDirectives: [MobileViewDirective],
 })

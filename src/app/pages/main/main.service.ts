@@ -3,9 +3,7 @@ import { Router } from '@angular/router';
 import { Chat } from '@core/models/chat';
 import { Message } from '@core/models/message';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class MainService {
   private router = inject(Router);
 
