@@ -10,6 +10,7 @@ export class MainService {
   private messageCache = new Map<string, Message[]>();
   chats = signal<Chat[]>([]);
   selectedChat = signal<Chat | null>(null);
+  sidebarOpen = signal<boolean>(false);
 
   getMessagesFromCache(chatId: string) {
     return this.messageCache.get(chatId);

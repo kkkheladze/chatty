@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { Message } from '@core/models/message';
 import { User } from '@core/models/user';
-import { AvatarComponent } from '@ui';
 
 @Component({
   selector: 'app-message',
   standalone: true,
-  imports: [AvatarComponent],
+  imports: [],
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

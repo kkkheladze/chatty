@@ -1,4 +1,6 @@
 @if (chat(); as chat) {
-  <app-avatar [user]="chat.users[1]" [description]="chat.lastMessage?.text || ''" size="large" />
+  @let user1 = chat.users[0];
+  @let user2 = chat.users[1];
+  <app-avatar [user]="user1._id === user()!._id ? user2 : user1" [description]="chat.lastMessage?.text || ''" size="large" />
   <p class="last-updated">{{ lastUpdated() }}</p>
 }

@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, input } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Chat } from '@core/models/chat';
+import { User } from '@core/models/user';
+import { AuthService } from '@core/services/auth.service';
 import { AvatarComponent } from '@ui';
 import { filter, timer } from 'rxjs';
 
@@ -13,10 +15,12 @@ import { filter, timer } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-panel' },
 })
-export class ChatComponent {
+export class ChatPreviewComponent {
+  private authService = inject(AuthService);
   private elementRef: ElementRef<HTMLElement> = inject(ElementRef);
 
   chat = input.required<Chat>();
+  user = this.authService.user;
   timer = toSignal(timer(0, 1000 * 60).pipe(filter(() => this.elementRef.nativeElement.checkVisibility())), { initialValue: 0 });
   lastUpdated = computed<string>(() => this.getLastUpdated());
 

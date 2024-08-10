@@ -12,12 +12,12 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { SkeletonModule } from 'primeng/skeleton';
 import { BehaviorSubject, catchError, switchMap } from 'rxjs';
 import { MainService } from '../main.service';
-import { ChatComponent } from './chat-preview/chat-preview.component';
+import { ChatPreviewComponent } from './chat-preview/chat-preview.component';
 
 @Component({
   selector: 'app-chat-preview-list',
   standalone: true,
-  imports: [FormsModule, NgTemplateOutlet, SkeletonModule, AutoCompleteModule, InputSwitchModule, AvatarComponent, ChatComponent, AsyncPipe, NgClass],
+  imports: [FormsModule, NgTemplateOutlet, SkeletonModule, AutoCompleteModule, InputSwitchModule, AvatarComponent, ChatPreviewComponent, AsyncPipe, NgClass],
   templateUrl: './chat-preview-list.component.html',
   styleUrl: './chat-preview-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -56,7 +56,7 @@ export class ChatPreviewListComponent {
 
   createChat(event: AutoCompleteSelectEvent) {
     this.searchInput.next('');
-    const existingChat = this.mainService.chats().find((chat) => chat.users[1]._id === event.value._id);
+    const existingChat = this.mainService.chats().find((chat) => chat.users[0] === event.value._id || chat.users[1] === event.value._id);
     if (existingChat) {
       this.selectChat(existingChat);
     } else {

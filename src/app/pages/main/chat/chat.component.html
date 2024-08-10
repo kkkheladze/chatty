@@ -1,3 +1,16 @@
+<div class="header">
+  @if (mobileView()) {
+    <p-button icon="pi pi-comments" [text]="true" severity="secondary" [rounded]="true" (click)="mainService.sidebarOpen.set(!mainService.sidebarOpen())" />
+  }
+
+  @if (chat(); as chat) {
+    @let user1 = chat.users[0];
+    @let user2 = chat.users[1];
+
+    <app-avatar [user]="user1._id === ownUserId() ? user2 : user1" textPosition="right" />
+  }
+</div>
+<p-divider />
 <div class="messages">
   @if (chat(); as chat) {
     @let user1 = chat.users[0];

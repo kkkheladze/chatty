@@ -1,7 +1,6 @@
 <app-menu-bar />
 <div class="body">
   @if (mobileView()) {
-    <p-button [style]="{ top: '0.5rem', left: '0.5rem' }" icon="pi pi-comments" [text]="true" severity="secondary" [rounded]="true" (click)="sidebarOpen.set(!sidebarOpen())" />
     <p-sidebar [(visible)]="sidebarOpen" [blockScroll]="true" [style]="{ display: 'grid', background: 'transparent', border: 'none' }">
       <ng-template pTemplate="headless">
         <app-chat-preview-list style="height: 100%" (chatSelected)="sidebarOpen.set(false)" />

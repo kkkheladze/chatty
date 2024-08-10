@@ -15,11 +15,12 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { catchError, filter, switchMap, tap } from 'rxjs';
 import { MainService } from '../main.service';
 import { MessageComponent } from './message/message.component';
+import { AvatarComponent } from '@ui';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [ReactiveFormsModule, ProgressSpinnerModule, SkeletonModule, DividerModule, InputTextModule, ButtonModule, AsyncPipe, MessageComponent],
+  imports: [ReactiveFormsModule, ProgressSpinnerModule, SkeletonModule, DividerModule, InputTextModule, ButtonModule, AsyncPipe, MessageComponent, AvatarComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,7 +29,7 @@ import { MessageComponent } from './message/message.component';
 })
 export class ChatComponent {
   private restService = inject(RestService);
-  private mainService = inject(MainService);
+  protected mainService = inject(MainService);
   private authService = inject(AuthService);
   private websocketService = inject(WsService);
   protected mobileView = inject(MobileViewDirective).mobileView;

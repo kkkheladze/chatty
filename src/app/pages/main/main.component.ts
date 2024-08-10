@@ -20,5 +20,5 @@ import { MainService } from './main.service';
 })
 export class MainComponent {
   protected mobileView = inject(MobileViewDirective).mobileView;
-  protected sidebarOpen = signal<boolean>(false);
+  protected sidebarOpen = inject(MainService).sidebarOpen;
 }
