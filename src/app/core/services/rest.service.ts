@@ -90,7 +90,15 @@ export class RestService {
   uploadAvatar(avatar: Blob) {
     const formData = new FormData();
     formData.append('avatar', avatar);
-    return this.http.post<void>('/api/users/avatar', formData);
+    return this.http.post<void>('/api/avatars', formData);
+  }
+
+  /**
+   * Deletes a user's avatar.
+   * @returns A promise that resolves when the avatar is successfully deleted.
+   */
+  deleteAvatar() {
+    return this.http.delete<void>(`/api/avatars`);
   }
 
   /**

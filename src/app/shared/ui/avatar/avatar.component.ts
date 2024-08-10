@@ -52,7 +52,7 @@ export class AvatarComponent {
       });
     });
 
-    this.avatarService.avatarUploaded
+    this.avatarService.avatarChanged
       .pipe(
         filter((id) => id === this.user()?._id),
         switchMap((id) => this.avatarService.getUserAvatar(id!)),

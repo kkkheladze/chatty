@@ -1,1 +1,6 @@
-<p>change-avatar-dialog works!</p>
+<p-divider />
+<img [src]="avatar()" alt="Avatar" />
+<p-divider />
+<p-button label="Upload" icon="pi pi-upload" [loading]="uploading()" [disabled]="deleting()" (onClick)="input.click()" />
+<p-button label="Delete" icon="pi pi-trash" severity="danger" [loading]="deleting()" [disabled]="uploading() || avatar() === PLACEHOLDER" (onClick)="deleteAvatar()" />
+<input type="file" accept="image/*" size="50" hidden #input (input)="onAvatarInput($event)" />

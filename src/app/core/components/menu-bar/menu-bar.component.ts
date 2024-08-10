@@ -27,7 +27,6 @@ export class MenuBarComponent {
     {
       label: 'Change Avatar',
       icon: 'pi pi-image',
-      disabled: true,
       command: () => this.changeAvatarDialog(),
     },
     {
