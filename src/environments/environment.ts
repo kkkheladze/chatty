@@ -1,3 +1,3 @@
 export const environment = {
-  WS_URL: 'ws://chatty-server.up.railway.app',
+  WS_URL: 'wss://chatty-server.up.railway.app/',
 };
