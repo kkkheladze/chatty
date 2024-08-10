@@ -87,7 +87,7 @@ export class RestService {
    * @param avatar - The avatar file to upload.
    * @returns A promise that resolves when the avatar is successfully uploaded.
    */
-  uploadAvatar(avatar: File) {
+  uploadAvatar(avatar: Blob) {
     const formData = new FormData();
     formData.append('avatar', avatar);
     return this.http.post<void>('/api/users/avatar', formData);

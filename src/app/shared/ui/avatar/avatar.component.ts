@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input, signal, untracked } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { User } from '@core/models/user';
 import { AvatarService } from '@core/services/avatar.service';
 import { AvatarModule } from 'primeng/avatar';
 import { SkeletonModule } from 'primeng/skeleton';
+import { filter, switchMap, tap } from 'rxjs';
 
 type Size = 'normal' | 'large' | 'xlarge';
 
@@ -43,15 +45,21 @@ export class AvatarComponent {
       untracked(() => {
         if (!this.loadImage()) return;
         this.loading.set(true);
-        this.avatarService.getUserAvatar(user._id).subscribe({
-          next: (avatar) => {
-            this.avatar.set(avatar);
-            this.loading.set(false);
-          },
-          error: () => this.loading.set(false),
+        this.avatarService.getUserAvatar(user._id).subscribe((avatar) => {
+          this.avatar.set(avatar);
+          this.loading.set(false);
         });
       });
     });
+
+    this.avatarService.avatarUploaded
+      .pipe(
+        filter((id) => id === this.user()?._id),
+        switchMap((id) => this.avatarService.getUserAvatar(id!)),
+        tap((avatar) => this.avatar.set(avatar)),
+        takeUntilDestroyed()
+      )
+      .subscribe();
   }
 
   private getInitials() {

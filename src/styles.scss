@@ -1,6 +1,7 @@
 @import 'primeng/resources/primeng.css' layer(primeng);
 @import 'primeicons/primeicons.css' layer(primeng);
 @import './app/core/styles/prime.scss' layer(custom-prime);
+@import '@angular/cdk/overlay-prebuilt.css' layer(angular-cdk);
 
 html,
 body {
